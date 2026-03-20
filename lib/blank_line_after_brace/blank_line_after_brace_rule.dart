@@ -19,8 +19,6 @@ class BlankLineAfterBraceRule extends AnalysisRule {
   LintCode get diagnosticCode => code;
 
   @override
-  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) {
-    var visitor = BlankLineVisitor(this, context);
-    registry.addAwaitExpression(this, visitor);
-  }
+  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) =>
+      registry.addBlock(this, BlankLineVisitor(onError: reportAtToken));
 }

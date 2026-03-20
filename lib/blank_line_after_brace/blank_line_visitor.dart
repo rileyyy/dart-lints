@@ -1,13 +1,11 @@
-import 'package:analyzer/analysis_rule/analysis_rule.dart';
-import 'package:analyzer/analysis_rule/rule_context.dart';
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
 class BlankLineVisitor extends SimpleAstVisitor<void> {
-  final AnalysisRule rule;
-  final RuleContext context;
+  final void Function(Token) onError;
 
-  BlankLineVisitor(this.rule, this.context);
+  BlankLineVisitor({required this.onError});
 
   @override
   void visitBlock(Block node) {
@@ -21,6 +19,9 @@ class BlankLineVisitor extends SimpleAstVisitor<void> {
     // Ignore if next token is another '}'
     if (next.lexeme == '}') return;
 
+    // Ignore if next token is EOF (end of file)
+    if (next.isEof) return;
+
     final compilationUnit = node.root as CompilationUnit;
     final lineInfo = compilationUnit.lineInfo;
     final currentLine = lineInfo.getLocation(rightBracket.offset).lineNumber;
@@ -30,7 +31,7 @@ class BlankLineVisitor extends SimpleAstVisitor<void> {
 
     // We want at least one blank line => difference >= 2
     if (lineDiff < 2) {
-      rule.reportAtToken(rightBracket);
+      onError(rightBracket);
     }
   }
 }
