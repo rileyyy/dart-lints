@@ -1,2 +1,3 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+# Dart Lints
+
+The collection of custom dart linter rules to try making dart a more respectable langauge.
