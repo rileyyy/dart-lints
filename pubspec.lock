@@ -26,13 +26,21 @@ packages:
     source: hosted
     version: "12.0.0"
   analyzer_plugin:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: analyzer_plugin
       sha256: "886f612deaa64afaa28ba7bcf8d54e1b6d34a269a71a3761125388a78e52551b"
       url: "https://pub.dev"
     source: hosted
     version: "0.14.7"
+  analyzer_testing:
+    dependency: "direct dev"
+    description:
+      name: analyzer_testing
+      sha256: "653ba194a95992830f51811427c44601e1d6560978a441c107552c4a1b36467f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   args:
     dependency: transitive
     description:
@@ -345,6 +353,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.17"
+  test_reflective_loader:
+    dependency: "direct dev"
+    description:
+      name: test_reflective_loader
+      sha256: d828d5ca15179aaac2aaf8f510cf0a52ec28e0031681b044ec5e581a4b8002e7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   typed_data:
     dependency: transitive
     description:
