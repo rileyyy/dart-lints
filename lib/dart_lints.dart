@@ -1,5 +1,6 @@
 import 'package:analysis_server_plugin/plugin.dart';
 import 'package:analysis_server_plugin/registry.dart';
+import 'package:dart_lints/always_use_braces/always_use_braces_fix.dart';
 
 import 'package:dart_lints/always_use_braces/always_use_braces_rule.dart';
 import 'package:dart_lints/blank_line_after_brace/blank_line_after_brace_fix.dart';
@@ -17,6 +18,7 @@ class DartLints extends Plugin {
         BlankLineAfterBraceRule.code,
         BlankLineAfterBraceFix.new,
       )
-      ..registerLintRule(AlwaysUseBracesRule());
+      ..registerLintRule(AlwaysUseBracesRule())
+      ..registerFixForRule(AlwaysUseBracesRule.code, AlwaysUseBracesFix.new);
   }
 }
