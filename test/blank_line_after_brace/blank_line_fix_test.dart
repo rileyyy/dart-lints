@@ -26,21 +26,33 @@ void main() {
     tempDir.deleteSync(recursive: true);
   });
 
-  Future<(ResolvedUnitResult, ResolvedLibraryResult)> analyze(String code) async {
+  Future<(ResolvedUnitResult, ResolvedLibraryResult)> analyze(
+    String code,
+  ) async {
     final file = File('${tempDir.path}/test.dart')..writeAsStringSync(code);
-    final collection = AnalysisContextCollection(
-      includedPaths: [tempDir.path],
+    final normalizedPath = file.resolveSymbolicLinksSync();
+
+    final session = AnalysisContextCollection(
+      includedPaths: [tempDir.resolveSymbolicLinksSync()],
       resourceProvider: PhysicalResourceProvider.INSTANCE,
+    ).contextFor(normalizedPath).currentSession;
+
+    final unitResult = await session.getResolvedUnit(normalizedPath);
+    final libraryResult = await session.getResolvedLibraryContaining(
+      normalizedPath,
     );
-    final session = collection.contextFor(file.path).currentSession;
-    final unitResult = await session.getResolvedUnit(file.path);
-    final libraryResult = await session.getResolvedLibraryContaining(file.path);
-    return (unitResult as ResolvedUnitResult, libraryResult as ResolvedLibraryResult);
+
+    return (
+      unitResult as ResolvedUnitResult,
+      libraryResult as ResolvedLibraryResult,
+    );
   }
 
   int? findErrorOffset(String code) {
     int? offset;
-    final visitor = BlankLineVisitor(onError: (token) => offset ??= token.offset);
+    final visitor = BlankLineVisitor(
+      onError: (token) => offset ??= token.offset,
+    );
     final unit = parseString(content: code).unit;
     void walk(AstNode node) {
       if (node is Block) visitor.visitBlock(node);

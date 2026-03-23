@@ -46,7 +46,9 @@ void a() {
 List<String> _collectErrors(String code) {
   final result = parseString(content: code);
   final errors = <String>[];
-  final visitor = BlankLineVisitor(onError: (token) => errors.add(token.lexeme));
+  final visitor = BlankLineVisitor(
+    onError: (token) => errors.add(token.lexeme),
+  );
 
   void walk(AstNode node) {
     if (node is Block) visitor.visitBlock(node);

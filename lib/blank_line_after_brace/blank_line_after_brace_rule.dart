@@ -9,16 +9,19 @@ class BlankLineAfterBraceRule extends AnalysisRule {
   static const LintCode code = LintCode(
     'blank_line_after_closing_brace',
     'Require a blank line after a closing curly brace.',
-    correctionMessage: 'Add a blank line after the curly brace to improve readability.',
+    correctionMessage:
+        'Add a blank line after the curly brace to improve readability.',
     severity: DiagnosticSeverity.INFO,
   );
 
-  BlankLineAfterBraceRule() : super(name: code.lowerCaseName, description: code.problemMessage);
+  BlankLineAfterBraceRule()
+      : super(name: code.lowerCaseName, description: code.problemMessage);
 
   @override
   LintCode get diagnosticCode => code;
 
   @override
-  void registerNodeProcessors(RuleVisitorRegistry registry, RuleContext context) =>
+  void registerNodeProcessors(
+          RuleVisitorRegistry registry, RuleContext context) =>
       registry.addBlock(this, BlankLineVisitor(onError: reportAtToken));
 }
