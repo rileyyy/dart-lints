@@ -63,23 +63,29 @@ class AlwaysUseBracesFix extends ResolvedCorrectionProducer {
     }
 
     await builder.addDartFileEdit(file, (builder) {
-      final statementText = unitResult.content.substring(
-        targetStatement!.offset,
-        targetStatement.end,
+      final code = unitResult.content;
+      final statementText = code
+          .substring(targetStatement!.offset, targetStatement.end)
+          .trim();
+
+      // Find the control structure's indentation
+      final parent = targetStatement.parent!;
+      final controlIndent = code.substring(
+        code.lastIndexOf('\n', parent.offset) + 1,
+        parent.offset,
       );
 
-      // Add one level of indentation for the statement inside braces
-      final indent = unitResult.content.substring(
-        unitResult.content.lastIndexOf('\n', targetStatement.offset) + 1,
-        targetStatement.offset,
-      );
+      final eol = utils.endOfLine;
+      final innerIndent = '$controlIndent  ';
+
+      // Build the replacement with braces
 
       builder.addSimpleReplacement(
         SourceRange(
           targetStatement.offset,
           targetStatement.end - targetStatement.offset,
         ),
-        '{${utils.endOfLine}$indent  $statementText${utils.endOfLine}$indent}',
+        '{$eol$innerIndent$statementText$eol$controlIndent}',
       );
     });
   }
