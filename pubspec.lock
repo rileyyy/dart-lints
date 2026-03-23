@@ -26,7 +26,7 @@ packages:
     source: hosted
     version: "10.2.0"
   analyzer_plugin:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: analyzer_plugin
       sha256: a886aaa94fb128ffe9cf5ee2495d9ef42ef129fe2e265b84b8820987ca15f4cd

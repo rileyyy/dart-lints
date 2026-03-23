@@ -6,11 +6,11 @@ environment:
   sdk: 3.9.0
 
 dependencies:
-  analysis_server_plugin: ^0.3.10
   analyzer: ^10.2.0
+  analyzer_plugin: ^0.14.4
+  analysis_server_plugin: ^0.3.10
 
 dev_dependencies:
-  analyzer_plugin: ^0.14.4
   analyzer_testing: ^0.2.1
   flutter_lints: ^6.0.0
   test: ^1.31.0
